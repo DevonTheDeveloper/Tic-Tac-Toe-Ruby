@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# create a variable for winning combinations
 WINNING_COMBINATIONS = [[1, 2, 3],
                         [4, 5, 6],
                         [7, 8, 9],
@@ -10,10 +11,9 @@ WINNING_COMBINATIONS = [[1, 2, 3],
                         [3, 5, 7]].freeze
 
 # Board for Tic Tac Toe
+# create a board class
 class Board
   def initialize; end
-  # create a variable for winning combinations
-  # create a board class
   # place squares into the class
   # identify players, and give them markers
   # print the board
