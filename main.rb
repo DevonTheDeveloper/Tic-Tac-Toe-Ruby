@@ -20,8 +20,16 @@ end
 class Player
   attr_accessor :name
 
+  @amount_of_players = 0
+
   def initialize(name, symbol)
     @name = name
     @symbol = symbol
+    @amount_of_players += 1
   end
+end
+
+# Logic for Tic Tac Toe
+class GameLogic
+  play_game if @amount_of_players == 2
 end
