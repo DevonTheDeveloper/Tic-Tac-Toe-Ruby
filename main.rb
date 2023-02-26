@@ -6,13 +6,19 @@ end
 
 # Board for Tic Tac Toe
 class Board
-  def print_board
-    puts " 1 | 2 | 3\n---+---+---\n 4 | 5 | 6\n---+---+---\n 7 | 8 | 9"
-  end
+  WINNING_COMBINATIONS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
+                          [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]].freeze
 
   def initialize
     @board_squares = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    print_board
+  end
+
+  def show_board
+    puts "       #{@board_squares[0]} | #{@board_squares[1]} | #{@board_squares[2]}
+      ---+---+---
+       #{@board_squares[3]} | #{@board_squares[4]} | #{@board_squares[5]}
+      ---+---+---
+       #{@board_squares[6]} | #{@board_squares[7]} | #{@board_squares[8]}"
   end
 end
 
@@ -20,16 +26,14 @@ end
 class Player
   attr_accessor :name
 
-  @amount_of_players = 0
-
   def initialize(name, symbol)
     @name = name
     @symbol = symbol
-    @amount_of_players += 1
   end
 end
 
 # Logic for Tic Tac Toe
-class GameLogic
-  play_game if @amount_of_players == 2
+class Game
+  player1 = Player.new('Player 1', 'X')
+  player2 = Player.new('Player 2', 'O')
 end
