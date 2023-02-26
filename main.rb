@@ -20,6 +20,13 @@ class Board
       ---+---+---
        #{@board_squares[6]} | #{@board_squares[7]} | #{@board_squares[8]}"
   end
+
+  def move_symbol(symbol)
+    print 'Place your symbol, use numbers 1-9'
+    position = gets.chomp
+    @board_squares[position.to_i - 1] = symbol
+    show_board
+  end
 end
 
 # Everything player related class
@@ -36,4 +43,6 @@ end
 class Game
   player1 = Player.new('Player 1', 'X')
   player2 = Player.new('Player 2', 'O')
+  board = Board.new()
+  board.show_board
 end
