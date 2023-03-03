@@ -40,20 +40,14 @@ end
 class Game
   player1 = Player.new('Player 1', 'X')
   player2 = Player.new('Player 2', 'O')
-  board = Board.new
-  board.show_board
 
   WINNING_COMBINATIONS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
                           [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]].freeze
 
-  WINNING_COMBINATIONS.each do |combo|
-    combo.all? do |element|
-      if element == 'X' || element == 'O'
-        print 'We have a winner!'
-      else
-        board.move_symbol(player1.symbol)
-        board.move_symbol(player2.symbol)
-      end
+  def check_win?
+    WINNING_COMBINATIONS.each do |combo|
+      return true if combo.all? { |square| square == 'X' }
     end
+    false
   end
 end
