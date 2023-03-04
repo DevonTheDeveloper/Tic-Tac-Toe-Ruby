@@ -38,15 +38,26 @@ end
 
 # Logic for Tic Tac Toe
 class Game
-  player1 = Player.new('Player 1', 'X')
-  player2 = Player.new('Player 2', 'O')
+  p1 = Player.new('Player 1', 'X')
+  p2 = Player.new('Player 2', 'O')
 
-  WINNING_COMBINATIONS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
-                          [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]].freeze
+  def initialize
+    Board.new.move_symbol until full_board? == true
+  end
 
+  WINNING_COMBINATIONS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9],
+                          [1, 5, 9], [3, 5, 7]].freeze
+  # Checks if any player has a winning combination
   def check_win?
     WINNING_COMBINATIONS.each do |combo|
-      return true if combo.all? { |square| square == 'X' }
+      return true if combo.all? { |square| square == p1.marker || p2.marker }
+    end
+    false
+  end
+
+  def full_board?
+    @board_squares.each do |square|
+      return true if square.includes('X' || 'O')
     end
     false
   end
