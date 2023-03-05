@@ -30,7 +30,7 @@ end
 
 # Everything player related class
 class Player
-  attr_reader :symbol, :name
+  attr_reader :name, :symbol
 
   def initialize(name, symbol)
     @name = name
@@ -40,11 +40,10 @@ end
 
 # Logic for Tic Tac Toe
 class Game
-  p1 = Player.new('Player 1', 'X')
-  p2 = Player.new('Player 2', 'O')
-
   def initialize
     @board = Board.new
+    @curr_player = Player.new('Player 1', 'X')
+    @next_player = Player.new('Player 2', 'O')
   end
 
   WINNING_COMBINATIONS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9],
@@ -52,19 +51,31 @@ class Game
   # Checks if any player has a winning combination
   def check_win?
     WINNING_COMBINATIONS.each do |combo|
-      return true if combo.all? { |square| square == p1.marker || p2.marker }
+      return true if combo.all? do |square|
+        @board.board_squares[square - 1] == @curr_player.symbol
+      end
     end
     false
   end
 
   def full_board?
-    return true if @board.board_squares.all? { |square| square == 'X' || 'O' }
+    return true if @board.board_squares.all? do |square|
+      square == @curr_player.symbol || square == @next_player.symbol
+    end
 
     false
   end
 
   def run
-    @board.move_symbol(p1.marker) until full_board?
+    @board.move_symbol(@curr_player.symbol) until full_board? || check_win?
+    @board.move_symbol(@next_player.symbol) until full_board? || check_win?
+
+    if check_win? == true
+      puts "#{@curr_player.name} has won the match!"
+    end
+    return unless full_board? || check_win? == false
+
+    puts 'Tie! Nobody has won.'
   end
 end
 
