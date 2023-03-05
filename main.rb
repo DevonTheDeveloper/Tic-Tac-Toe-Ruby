@@ -6,6 +6,8 @@ end
 
 # Board for Tic Tac Toe
 class Board
+  attr_accessor :board_squares
+
   def initialize
     @board_squares = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   end
@@ -42,7 +44,7 @@ class Game
   p2 = Player.new('Player 2', 'O')
 
   def initialize
-    Board.new.move_symbol until full_board? == true
+    @board = Board.new
   end
 
   WINNING_COMBINATIONS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9],
@@ -56,9 +58,15 @@ class Game
   end
 
   def full_board?
-    @board_squares.each do |square|
-      return true if square.includes('X' || 'O')
-    end
+    return true if @board.board_squares.all? { |square| square == 'X' || 'O' }
+
     false
   end
+
+  def run
+    @board.move_symbol(p1.marker) until full_board?
+  end
 end
+
+game = Game.new
+game.run
