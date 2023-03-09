@@ -22,8 +22,10 @@ class Board
 
   def move_symbol(symbol)
     puts 'Place your symbol, use numbers 1-9'
-    position = gets.chomp
-    @board_squares[position.to_i - 1] = symbol
+    position = gets.chomp.to_i
+    return unless position
+
+    @board_squares[position - 1] = symbol
     show_board
   end
 end
@@ -67,17 +69,24 @@ class Game
   end
 
   def run
-    @board.move_symbol(@curr_player.symbol) until full_board? || check_win?
-    @board.move_symbol(@next_player.symbol) until full_board? || check_win?
+    loop do
+      @board.move_symbol(@curr_player.symbol)
+
+      break if check_win? || full_board?
+
+      switch_player
+    end
 
     if check_win? == true
       puts "#{@curr_player.name} has won the match!"
+    elsif full_board? || check_win? == false
+      puts 'Tie! Nobody has won.'
     end
-    return unless full_board? || check_win? == false
+  end
 
-    puts 'Tie! Nobody has won.'
+  def switch_player
+    @curr_player, @next_player = @next_player, @curr_player
   end
 end
 
-game = Game.new
-game.run
+Game.new.run
