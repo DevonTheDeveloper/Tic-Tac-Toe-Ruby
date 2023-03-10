@@ -53,6 +53,8 @@ class Game
     @board = Board.new
     @curr_player = Player.new('Player 1', 'X')
     @next_player = Player.new('Player 2', 'O')
+
+    puts "\nWelcome to Tic Tac Toe!\n"
   end
 
   WINNING_COMBINATIONS = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9],
@@ -86,13 +88,27 @@ class Game
 
     if check_win? == true
       puts "#{@curr_player.name} has won the match!"
+      play_again?
     elsif full_board? || check_win? == false
       puts 'Tie! Nobody has won.'
+      play_again?
     end
   end
 
   def switch_player
     @curr_player, @next_player = @next_player, @curr_player
+  end
+
+  def play_again?
+    return unless check_win? == true || full_board? == true
+
+    puts "\nWould you like to play again? [y/n]"
+    input = gets.chomp.downcase
+    if input == 'y'
+      Game.new.run
+    else
+      puts 'Goodbye!'
+    end
   end
 end
 
