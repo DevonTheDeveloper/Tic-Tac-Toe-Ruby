@@ -21,11 +21,22 @@ class Board
   end
 
   def move_symbol(symbol)
-    puts 'Place your symbol, use numbers 1-9'
+    puts "\nPlace your symbol, use numbers 1-9\n"
     position = gets.chomp.to_i
-    return unless position
+    
+    until position == @board_squares[position - 1] && !position.zero?
+      puts "\nPlace your symbol, use numbers 1-9\n"
+      position = gets.chomp.to_i
+    end
 
-    @board_squares[position - 1] = symbol
+    if position != @board_squares[position - 1] && !position.zero?
+      puts "Incorrect, try again."
+    end
+
+    return unless position == @board_squares[position - 1] && !position.zero?
+
+    # ↓ Makes the board square a symbol in the actual array, this is used for validation.
+    !@board_squares[position - 1] = symbol
     show_board
   end
 end
